@@ -6,10 +6,20 @@ jobs:
     strategy:
       matrix:
         include:
-          - target: mipsel-linux-musl
-          - target: mipsel-linux-muslsf
-    runs-on: ubuntu-22.04
-    name: ${{ matrix.target }}
+          - os: ubuntu-22.04
+            target: mipsel-linux-musl
+            host: x86_64-linux
+          - os: ubuntu-22.04
+            target: mipsel-linux-muslsf
+            host: x86_64-linux
+          - os: ubuntu-22.04-arm
+            target: mipsel-linux-musl
+            host: aarch64-linux
+          - os: ubuntu-22.04-arm
+            target: mipsel-linux-muslsf
+            host: aarch64-linux
+    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.target }}-cross-${{ matrix.host }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -17,12 +27,12 @@ jobs:
       - run: |
           cat << EOF > config.mak
           TARGET = ${{ matrix.target }}
-          OUTPUT = ${{ github.workspace }}/output/${{ matrix.target }}
+          OUTPUT = ${{ github.workspace }}/output/${{ matrix.target }}-cross-${{ matrix.host }}
           COMMON_CONFIG += CFLAGS="-g0 -O2" CXXFLAGS="-g0 -O2" LDFLAGS="-s"
           EOF
       - run: make install -j4
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.target }}
+          name: ${{ matrix.target }}-cross-${{ matrix.host }}
           path: output/*
           retention-days: 5

@@ -1,0 +1,39 @@
+name: Prebuild
+on:
+  workflow_dispatch:
+jobs:
+  prebuild:
+    strategy:
+      matrix:
+        include:
+          - target: mipsel-linux-musl
+          - target: mipsel-linux-muslsf
+    runs-on: ubuntu-22.04
+    name: ${{ matrix.target }}
+    steps:
+      - uses: actions/checkout@v4
+        repository: richfelker/musl-cross-make
+      - run: |
+          cat << EOF > config.mak
+          TARGET = ${{ matrix.target }}
+          OUTPUT = ${{ github.workspace }}/output/${{ matrix.target }}
+          EOF
+      - run: make install -j8
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.target }}
+          path: output/*
+          retention-days: 5
+  merge:
+    runs-on: ubuntu-latest
+    needs: prebuild
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: output
+          merge-multiple: true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prebuilds
+          path: output
+          retention-days: 5

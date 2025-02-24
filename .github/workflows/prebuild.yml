@@ -12,7 +12,8 @@ jobs:
     name: ${{ matrix.target }}
     steps:
       - uses: actions/checkout@v4
-        repository: richfelker/musl-cross-make
+        with:
+          repository: richfelker/musl-cross-make
       - run: |
           cat << EOF > config.mak
           TARGET = ${{ matrix.target }}

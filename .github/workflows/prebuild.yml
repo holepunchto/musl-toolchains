@@ -28,7 +28,7 @@ jobs:
           cat << EOF > config.mak
           TARGET = ${{ matrix.target }}
           OUTPUT = ${{ github.workspace }}/output/${{ matrix.target }}-cross-${{ matrix.host }}
-          COMMON_CONFIG += CFLAGS="-g0 -O2" CXXFLAGS="-g0 -O2" LDFLAGS="-s"
+          COMMON_CONFIG += CFLAGS="-g0 -Os" CXXFLAGS="-g0 -Os" LDFLAGS="-s"
           EOF
       - run: make install -j4
       - uses: actions/upload-artifact@v4

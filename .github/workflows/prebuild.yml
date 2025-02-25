@@ -13,6 +13,12 @@ jobs:
             target: x86_64-linux-musl
             host: x86_64-linux
           - os: ubuntu-22.04
+            target: mips-linux-musl
+            host: x86_64-linux
+          - os: ubuntu-22.04
+            target: mips-linux-muslsf
+            host: x86_64-linux
+          - os: ubuntu-22.04
             target: mipsel-linux-musl
             host: x86_64-linux
           - os: ubuntu-22.04
@@ -23,6 +29,12 @@ jobs:
             host: aarch64-linux
           - os: ubuntu-22.04-arm
             target: x86_64-linux-musl
+            host: aarch64-linux
+          - os: ubuntu-22.04-arm
+            target: mips-linux-musl
+            host: aarch64-linux
+          - os: ubuntu-22.04-arm
+            target: mips-linux-muslsf
             host: aarch64-linux
           - os: ubuntu-22.04-arm
             target: mipsel-linux-musl

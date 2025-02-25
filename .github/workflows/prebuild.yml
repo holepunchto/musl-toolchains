@@ -5,43 +5,21 @@ jobs:
   prebuild:
     strategy:
       matrix:
+        target:
+          - aarch64-linux-musl
+          - mips-linux-musl
+          - mips-linux-muslsf
+          - mipsel-linux-musl
+          - mipsel-linux-muslsf
+          - x86_64-linux-musl
+        host:
+          - aarch64-linux
+          - x86_64-linux
         include:
-          - os: ubuntu-22.04
-            target: aarch64-linux-musl
-            host: x86_64-linux
-          - os: ubuntu-22.04
-            target: x86_64-linux-musl
-            host: x86_64-linux
-          - os: ubuntu-22.04
-            target: mips-linux-musl
-            host: x86_64-linux
-          - os: ubuntu-22.04
-            target: mips-linux-muslsf
-            host: x86_64-linux
-          - os: ubuntu-22.04
-            target: mipsel-linux-musl
-            host: x86_64-linux
-          - os: ubuntu-22.04
-            target: mipsel-linux-muslsf
-            host: x86_64-linux
-          - os: ubuntu-22.04-arm
-            target: aarch64-linux-musl
-            host: aarch64-linux
-          - os: ubuntu-22.04-arm
-            target: x86_64-linux-musl
-            host: aarch64-linux
-          - os: ubuntu-22.04-arm
-            target: mips-linux-musl
-            host: aarch64-linux
-          - os: ubuntu-22.04-arm
-            target: mips-linux-muslsf
-            host: aarch64-linux
-          - os: ubuntu-22.04-arm
-            target: mipsel-linux-musl
-            host: aarch64-linux
-          - os: ubuntu-22.04-arm
-            target: mipsel-linux-muslsf
-            host: aarch64-linux
+          - host: aarch64-linux
+            os: ubuntu-22.04-arm
+          - host: x86_64-linux
+            os: ubuntu-22.04
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.target }}-cross-${{ matrix.host }}
     steps:

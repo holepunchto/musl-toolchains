@@ -41,6 +41,7 @@ jobs:
           TARGET = ${{ matrix.target }}
           OUTPUT = ${{ github.workspace }}/output/${{ matrix.target }}-cross-${{ matrix.host }}
           COMMON_CONFIG += CFLAGS="-g0 -Os" CXXFLAGS="-g0 -Os" LDFLAGS="-s"
+          MUSL_VER = 1.2.5
           EOF
       - run: make install -j4
       - uses: actions/upload-artifact@v4

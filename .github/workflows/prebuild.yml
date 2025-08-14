@@ -31,6 +31,8 @@ jobs:
           TARGET = ${{ matrix.target }}
           OUTPUT = ${{ github.workspace }}/output/${{ matrix.target }}-cross-${{ matrix.host }}
           COMMON_CONFIG += CFLAGS="-g0 -Os" CXXFLAGS="-g0 -Os" LDFLAGS="-s"
+          BINUTILS_VER = 2.44
+          GCC_VER = 15.1.0
           MUSL_VER = 1.2.5
           EOF
       - run: make install -j4
